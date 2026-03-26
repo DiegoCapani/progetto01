@@ -11,7 +11,13 @@
         <a-asset-item id="modello" src="modello.glb"></a-asset-item>
       </a-assets>
 
-      <a-marker preset="hiro">
+      <a-marker 
+        preset="hiro" 
+        smooth="true" 
+        smoothCount="10" 
+        smoothTolerance="0.01" 
+        smoothThreshold="5">
+        
         <a-entity 
           gltf-model="#modello" 
           scale="0.1 0.1 0.1" 
