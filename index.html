@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AR Artist Installazione - GLB Essential</title>
+    
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <script>
+      /**
+       * SCRIPT GHOSTING (Persistenza)
+       * Questo script intercetta l'evento 'markerLost'. 
+       * Invece di far sparire l'oggetto, lo mantiene visibile nell'ultima posizione.
+       */
+      AFRAME.registerComponent('marker-handler', {
+        init: function () {
+          const marker = this.el;
+          const entity = document.querySelector("#opera-arte");
+
+          marker.addEventListener('markerFound', () => {
+            entity.setAttribute('visible', true);
+            console.log("Marker trovato: Opera visualizzata");
+          });
+
+          marker.addEventListener('markerLost', () => {
+            // Non cambiamo la visibilità: l'oggetto resta "fantasma" nello spazio
+            console.log("Marker perso: Modalità Ghosting attiva");
+          });
+        }
+      });
+    </script>
+    
+    <style>
+      body { margin: 0; overflow: hidden; font-family: sans-serif; }
+    </style>
+  </head>
+
+  <body>
+    <a-scene 
+      embedded 
+      vr-mode-ui="enabled: false"
+      arjs="sourceType: webcam; 
+            sourceWidth: 1280; sourceHeight: 720; 
+            displayWidth: 1280; displayHeight: 720; 
+            debugUIEnabled: false; 
+            detectionMode: mono_and_matrix; 
+            matrixCodeType: 3x3;">
+
+      <a-assets>
+        <a-asset-item id="mioModelloGLB" src="modello.glb"></a-asset-item>
+      </a-assets>
